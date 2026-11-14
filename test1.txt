@@ -1,0 +1,4 @@
+int number = 25;
+float average = 12.5;
+if (number >= 10) // comment
+ifvalue != @ 3

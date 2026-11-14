@@ -1,0 +1,4 @@
+int my_var = 12.;
+# value @ count
+!x = 5
+float y = .5;
