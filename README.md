@@ -1,70 +1,75 @@
-# Lexical Analyzer in Python
+# Lexical Analyzer
 
-A hand-written lexical analyzer (scanner) for a small C-like language, built for the Compiler course exercise. It does not use Lex, Flex, or regular expressions. The scanner works character by character.
+A hand-written, character-by-character lexical analyzer for the first Compiler course assignment. It reads source text from a file or standard input and prints recognized tokens, lexical errors, and token counts. It does not use Lex, Flex, or regular expressions. This project implements only the lexical-analysis assignment; it does not include later compiler stages.
 
 ## Supported tokens
 
-| Type | Description | Examples |
+| Type | Definition | Examples |
 |---|---|---|
-| KEYWORD | `int float bool if else while return print` | `if`, `int` |
-| IDENTIFIER | A letter followed by letters or digits | `x`, `value1`, `ifvalue` |
-| INTEGER | One or more digits | `10`, `1234` |
-| REAL | Digits, a dot, then digits | `3.14`, `12.75` |
-| OPERATOR | `+ - * / = == != >= <= > <` | `>=`, `==` |
-| SEPARATOR | `( ) { } ; ,` | `;`, `(` |
+| `KEYWORD` | `int`, `float`, `bool`, `if`, `else`, `while`, `return`, `print` | `if`, `int` |
+| `IDENTIFIER` | A letter followed by letters or digits | `x`, `value1`, `ifvalue` |
+| `INTEGER` | One or more digits | `10`, `1234` |
+| `REAL` | One or more digits, a dot, then one or more digits | `3.14`, `12.75` |
+| `OPERATOR` | `+`, `-`, `*`, `/`, `=`, `==`, `!=`, `>=`, `<=`, `>`, `<` | `>=`, `==` |
+| `SEPARATOR` | `(`, `)`, `{`, `}`, `;`, `,` | `;`, `(` |
 
-Whitespace, tabs, and single-line comments (`// ...`) are skipped and produce no tokens.
+Whitespace, tabs, and single-line comments (`// ...`) are skipped and do not produce tokens. The operator set preserves the existing conventional spellings and the PDF's explicit `>=` Maximal Munch example; no additional operator spellings are inferred from the PDF's visually ambiguous right-to-left examples.
 
-## How it works
+## Behavior
 
-- **Maximal Munch:** at each step the longest valid token is taken. Two-character operators (`==`, `!=`, `>=`, `<=`) are checked before one-character ones.
-- **Keywords vs. identifiers:** the whole word is read first, then compared with the keyword set. So `if` is a KEYWORD and `ifvalue` is an IDENTIFIER.
-- **Real numbers:** a dot is consumed only if a digit follows it, so `12.` becomes INTEGER `12` plus an invalid `.`.
-- **Error handling:** an invalid character (such as `@`, `#`, `_`, or a lone `!`) is reported with its line and column, skipped, and scanning continues.
+- **Maximal Munch:** two-character operators (`==`, `!=`, `>=`, `<=`) are checked before one-character operators.
+- **Keywords and identifiers:** the complete word is read before keyword lookup, so `if` is a `KEYWORD` and `ifvalue` is an `IDENTIFIER`.
+- **Real numbers:** the dot is part of a real number only when followed by a digit. For example, `12.` produces integer `12` and a lexical error for `.`.
+- **Lexical errors:** an invalid character is reported with its line and column, skipped, and scanning continues.
+- **Output:** each token is printed on its own line with its type, lexeme, line, and column. Errors and per-type token counts are printed afterward.
 
-## Usage
+## Run
 
-Requires Python 3.
+Requires Python 3; there are no external runtime dependencies.
 
+```text
+python lexer.py test1.txt
+python lexer.py test2.txt
+python lexer.py test3.txt
+python lexer.py
 ```
-python3 lexer.py test1.txt     # read from a file
-python3 lexer.py               # read from standard input (end with Ctrl+D)
+
+With no file argument, the lexer reads standard input until EOF (Ctrl+Z then Enter in Windows terminals; Ctrl+D in Unix-like terminals).
+
+## Supplied sample runs
+
+These summaries are from running the commands above against the three included input files:
+
+| Input | Output summary |
+|---|---|
+| `test1.txt` | 19 tokens: 3 `KEYWORD`, 4 `IDENTIFIER`, 4 `OPERATOR`, 3 `INTEGER`, 4 `SEPARATOR`, and 1 `REAL`; reports `@` at line 4, column 12. |
+| `test2.txt` | 28 tokens: 14 `IDENTIFIER`, 11 `OPERATOR`, 2 `INTEGER`, and 1 `SEPARATOR`; no lexical errors. |
+| `test3.txt` | 16 tokens: 2 `KEYWORD`, 6 `IDENTIFIER`, 3 `OPERATOR`, 3 `INTEGER`, and 2 `SEPARATOR`; reports `_`, `.`, `#`, `@`, `!`, and `.` with their source positions, then continues scanning. |
+
+Each command prints every token and the complete per-type count table, in addition to the error summary.
+
+## Tests
+
+Run the automated unit and command-line tests with Python's standard-library test runner:
+
+```text
+python -m unittest -v
 ```
 
-## Output
+The tests cover the token classes and rules above, maximal munch, line/column error reporting with continued scanning, token counts, both input modes, and all three supplied sample inputs.
 
-1. Every token on its own line: `<TYPE, 'lexeme'>` with its line and column.
-2. All lexical errors with line and column.
-3. A count of tokens per type and a total.
-
-## Files
+## Project files
 
 | File | Purpose |
 |---|---|
-| `lexer.py` | The lexical analyzer |
-| `test1.txt` | Variable declarations, numbers, comment, `if` vs `ifvalue`, one error |
-| `test2.txt` | One- and two-character operators, extra spaces and tabs |
-| `test3.txt` | Several lexical errors in a row (`_`, `.`, `#`, `@`, `!`) |
-
-## Sample
-
-Input:
-
-```
-int number = 25;
-ifvalue != @ 3
-```
-
-Output (shortened):
-
-```
-<KEYWORD, 'int'>
-<IDENTIFIER, 'number'>
-<OPERATOR, '='>
-<INTEGER, '25'>
-<SEPARATOR, ';'>
-<IDENTIFIER, 'ifvalue'>
-<OPERATOR, '!='>
-<INTEGER, '3'>
-Lexical error: invalid character '@' at line 2, column 12
-```
+| `lexer.py` | The lexical analyzer and command-line interface |
+| `test_lexer.py` | Automated tests for assignment requirements and sample inputs |
+| `test1.txt` | Declarations, integer/real values, comment, keyword-like identifier, and an invalid character |
+| `test2.txt` | Operators, arithmetic, whitespace, and tab |
+| `test3.txt` | Invalid characters and malformed real-number examples |
+| `test_lexer.py` | Automated unit and command-line tests |
+| `outputs/test1_output.txt` | Captured stdout from running the lexer on `test1.txt` |
+| `outputs/test2_output.txt` | Captured stdout from running the lexer on `test2.txt` |
+| `outputs/test3_output.txt` | Captured stdout from running the lexer on `test3.txt` |
+| `Compiler_Project_Report.docx` | Persian assignment report; the personal-analysis section is reserved for students |
+| `P_7621303702db4824989e4b509ef10d72.pdf` | Original first-assignment specification |

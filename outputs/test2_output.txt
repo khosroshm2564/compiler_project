@@ -1,0 +1,40 @@
+
+--- Tokens ---
+<IDENTIFIER, 'a'>  (line 1, col 1)
+<OPERATOR, '>='>  (line 1, col 2)
+<IDENTIFIER, 'b'>  (line 1, col 4)
+<IDENTIFIER, 'a'>  (line 2, col 1)
+<OPERATOR, '=='>  (line 2, col 3)
+<IDENTIFIER, 'b'>  (line 2, col 6)
+<IDENTIFIER, 'a'>  (line 3, col 1)
+<OPERATOR, '='>  (line 3, col 2)
+<IDENTIFIER, 'b'>  (line 3, col 3)
+<IDENTIFIER, 'x'>  (line 4, col 1)
+<OPERATOR, '<='>  (line 4, col 2)
+<IDENTIFIER, 'y'>  (line 4, col 4)
+<OPERATOR, '!='>  (line 4, col 6)
+<IDENTIFIER, 'z'>  (line 4, col 9)
+<OPERATOR, '<'>  (line 4, col 13)
+<IDENTIFIER, 'w'>  (line 4, col 17)
+<IDENTIFIER, 'total'>  (line 5, col 1)
+<OPERATOR, '='>  (line 5, col 9)
+<IDENTIFIER, 'a'>  (line 5, col 13)
+<OPERATOR, '+'>  (line 5, col 17)
+<IDENTIFIER, 'b'>  (line 5, col 21)
+<OPERATOR, '*'>  (line 5, col 25)
+<INTEGER, '2'>  (line 5, col 29)
+<OPERATOR, '-'>  (line 5, col 33)
+<IDENTIFIER, 'c'>  (line 5, col 37)
+<OPERATOR, '/'>  (line 5, col 41)
+<INTEGER, '4'>  (line 5, col 45)
+<SEPARATOR, ';'>  (line 5, col 47)
+
+--- Lexical Errors ---
+No errors.
+
+--- Token Count ---
+IDENTIFIER   14
+OPERATOR     11
+INTEGER      2
+SEPARATOR    1
+TOTAL        28

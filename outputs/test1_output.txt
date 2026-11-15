@@ -1,0 +1,33 @@
+
+--- Tokens ---
+<KEYWORD, 'int'>  (line 1, col 1)
+<IDENTIFIER, 'number'>  (line 1, col 5)
+<OPERATOR, '='>  (line 1, col 12)
+<INTEGER, '25'>  (line 1, col 14)
+<SEPARATOR, ';'>  (line 1, col 16)
+<KEYWORD, 'float'>  (line 2, col 1)
+<IDENTIFIER, 'average'>  (line 2, col 7)
+<OPERATOR, '='>  (line 2, col 15)
+<REAL, '12.5'>  (line 2, col 17)
+<SEPARATOR, ';'>  (line 2, col 21)
+<KEYWORD, 'if'>  (line 3, col 1)
+<SEPARATOR, '('>  (line 3, col 4)
+<IDENTIFIER, 'number'>  (line 3, col 5)
+<OPERATOR, '>='>  (line 3, col 12)
+<INTEGER, '10'>  (line 3, col 15)
+<SEPARATOR, ')'>  (line 3, col 17)
+<IDENTIFIER, 'ifvalue'>  (line 4, col 1)
+<OPERATOR, '!='>  (line 4, col 9)
+<INTEGER, '3'>  (line 4, col 14)
+
+--- Lexical Errors ---
+Lexical error: invalid character '@' at line 4, column 12
+
+--- Token Count ---
+KEYWORD      3
+IDENTIFIER   4
+OPERATOR     4
+INTEGER      3
+SEPARATOR    4
+REAL         1
+TOTAL        19
